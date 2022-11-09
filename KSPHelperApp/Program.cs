@@ -2,50 +2,33 @@
 
 class Program
 {
-    static Transfer? start;
+    static Transfer start;
     static int sum = 0;
 
     public static void Main()
     {
-        bool keeper = true;
         start = TransferFactory.Create();
-        while (keeper){
-            var current = ConsoleLoop();
-            if (current == null)
-            {
-                keeper = false;
-                Console.WriteLine("No value was read");
-                break;
-            } else if(current == "exit")
-            {
-                Console.WriteLine("Fine, see you soon!");
-                break;
-            }
-            else if(current == "help")
-            {
-                Console.WriteLine("Enter a location to calculate delta-v-requirements for:");
-                ConsoleLoop();
-            }
-            else
-            {
-                var res = SearchForElement(start, current);
-                if(res == null)
-                {
-                    Console.WriteLine("Element not found check spelling!");
-                }
-                Console.WriteLine(sum);
-                sum = 0;
-            }
+        EvaluateInput("start");
+    }
+
+    static void EvaluateInput(string? input) 
+    {
+        switch (input)
+        {
+            case "start": Console.WriteLine("give a target, type help or exit:"); ConsoleLoop(); break;
+            case null: Console.WriteLine("Nothing recieved, please try again!"); ConsoleLoop(); break;
+            case "help": Console.WriteLine("Enter a location to calculate delta-v-requirements for"); ConsoleLoop(); break;
+            case "exit": Console.WriteLine("Fine, see you soon!"); break;
+            default: Console.WriteLine("Evaluating delta-v for " + input); SearchForElement(start, input); break;
         }
     }
 
-    public static String? ConsoleLoop()
+    static void ConsoleLoop()
     {
-        Console.WriteLine("give a start, type help or exit:");
-        return Console.ReadLine();
+        EvaluateInput(Console.ReadLine());
     }
 
-    public static Transfer? SearchForElement(Transfer f, String name)
+    static Transfer? SearchForElement(Transfer f, String name)
     { 
         if(f == null || f.Transfers == null) { return null; }
 
@@ -83,7 +66,7 @@ class Program
         return null;
     }
 
-    public static void countPath(int num)
+    static void countPath(int num)
     {
         sum += num;
     }
