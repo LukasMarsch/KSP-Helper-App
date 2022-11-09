@@ -23,7 +23,7 @@ class Program
             }
             else if(current == "help")
             {
-                Console.WriteLine("Type a Planet to start from or append it with a position like 'Kerbin Orbit'");
+                Console.WriteLine("Enter a location to calculate delta-v-requirements for:");
                 ConsoleLoop();
             }
             else
